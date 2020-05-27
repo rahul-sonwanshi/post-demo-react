@@ -9,13 +9,15 @@ class Posts extends Component {
     displayBody: "",
     displayPostId: "",
     showDeleteDiv: false,
+    showLoader: false,
   };
 
   async componentDidMount() {
+    this.setState({ showLoader: true });
     const { data: posts } = await axios.get(
       "https://jsonplaceholder.typicode.com/posts"
     );
-    this.setState({ posts });
+    this.setState({ posts, showLoader: false });
   }
 
   handleShowDiv = (postId) => {
@@ -31,12 +33,13 @@ class Posts extends Component {
   };
 
   handleDelete = async (postId) => {
+    this.setState({ showLoader: true, showDiv: false });
     const proxyurl = "https://cors-anywhere.herokuapp.com/";
     const url = "https://jsonplaceholder.typicode.com/posts";
     const deleteReq = await axios.delete(proxyurl + url + "/" + postId);
     console.log(deleteReq);
     if (deleteReq) {
-      this.setState({ showDeleteDiv: true, showDiv: false });
+      this.setState({ showDeleteDiv: true, showDiv: false, showLoader: false });
     }
   };
 
@@ -61,7 +64,7 @@ class Posts extends Component {
           className="show-post"
         >
           <div>{this.state.displayTitle}</div>
-          <div>{this.state.displayBody}</div>
+          <p>{this.state.displayBody}</p>
 
           <button
             className="btn btn-primary"
@@ -78,6 +81,10 @@ class Posts extends Component {
         >
           Post Added.
         </div>
+        <div
+          style={{ display: this.state.showLoader ? "block" : "none" }}
+          className="loader message"
+        ></div>
       </React.Fragment>
     );
   }

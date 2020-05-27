@@ -1,5 +1,14 @@
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
+## Installation
+
+After cloning the app
+Run `npm i`
+then these commands to get required resources.
+`npm i axios@0.18`
+`npm i bootstrap@4.1.1`
+`npm i react-router-dom@4.3.1`
+
 ## Available Scripts
 
 In the project directory, you can run:
